@@ -53,3 +53,31 @@ function group<T extends Record<key, any>>(array: T[], key: keyof T): IGroup<T> 
 
 console.log(group<Data>(data, 'group'))
 
+// TYPE OF
+let strOrNum: string | number = 5;
+
+if (Math.random() > 0.5) {
+    strOrNum = 5
+} else {
+    strOrNum = 'srt'
+}
+
+if (typeof strOrNum === 'string') {
+    // ???
+}
+
+let srt2OrNumber: typeof strOrNum;
+
+const user = {
+    name: 'Vasia'
+}
+//get type from user ==> get keys from type
+type keyOfUser = keyof typeof user;
+
+enum Direction {
+    UP,
+    Down
+}
+
+// get enum names
+type d = keyof typeof Direction;
