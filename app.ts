@@ -155,3 +155,25 @@ function getUser2<T extends string | number>(id: T): UserOrUserPersistend<T> {
 
 const res1 = getUser2(1);
 const res2 = getUser2('1');
+
+// MAPPED TYPES!!!!
+type Modifier = 'read' | 'created' | 'update'
+
+type UserRoles = {
+    customer?: Modifier,
+    projects?: Modifier,
+    adminPanel?: Modifier,
+} // not modify code here! because it's cause error everywhere ==>
+
+type ModifierToAccess<Type> = {
+    +readonly [Property in keyof Type as `canAccess${string & Property}`]-?: boolean
+    // optional                      // optional
+}
+
+type UserAccess2 = ModifierToAccess<UserRoles>;
+
+type UserAccess1 = {
+    customer?: boolean,
+    projects?: boolean,
+    adminPanel?: boolean,
+}
