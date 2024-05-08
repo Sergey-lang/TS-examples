@@ -177,3 +177,29 @@ type UserAccess1 = {
     projects?: boolean,
     adminPanel?: boolean,
 }
+
+//
+interface User3 {
+    name: string;
+    age?: number;
+    email: string;
+}
+
+type partial = Partial<User>;
+const p: partial = {};
+
+type required = Required<User>;
+type readonly = Readonly<User>;
+
+interface PaymentPersistent {
+    id: number;
+    sum: number;
+    from: string;
+    to: string
+}
+
+type Payment = Omit<PaymentPersistent, 'id'>
+type Payment2 = Pick<PaymentPersistent, 'from' | 'to'>
+
+type ExtractEx = Extract<'from' | Payment, string>;
+type ExcludeEx = Exclude<'from' | 'to' | Payment, string>;
