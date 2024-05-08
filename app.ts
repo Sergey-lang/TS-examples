@@ -115,3 +115,43 @@ type dateType = User['permission']['endDate'];
 
 const roles = ['admin', 'user', 'super-user'] as const;
 type role2Types = typeof roles[number]
+
+// CONDITIONAL TYPES
+const a: number = Math.random() > 0.5 ? 1 : 0; // JS
+
+interface HTTPResponse<T extends 'success' | 'failed'> {
+    code: number;
+    data: T extends 'success' ? string : Error;
+}
+
+class User2 {
+    id: number;
+    name: string;
+}
+
+class UserPersistend extends User2 {
+    bdId: string;
+}
+
+function getUser(id: number): User2;
+function getUser(bdId: string): UserPersistend;
+function getUser(bdIdOrId: string | number): User2 | UserPersistend {
+    if (typeof bdIdOrId === 'number') {
+        return new User2();
+    } else {
+        return new UserPersistend();
+    }
+}
+
+type UserOrUserPersistend<T extends string | number> = T extends string ? UserPersistend : User2;
+
+function getUser2<T extends string | number>(id: T): UserOrUserPersistend<T> {
+    if (typeof id === 'number') {
+        return new User2() as UserOrUserPersistend<T>;
+    } else {
+        return new UserPersistend();
+    }
+}
+
+const res1 = getUser2(1);
+const res2 = getUser2('1');

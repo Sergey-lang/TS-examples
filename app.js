@@ -58,3 +58,21 @@ const user1 = {
 const nameUser = user1['name']; // JS
 const roleNames = 'roles';
 const roles = ['admin', 'user', 'super-user'];
+// CONDITIONAL TYPES
+const a = Math.random() > 0.5 ? 1 : 0; // JS
+class User2 {
+}
+class UserPersistend {
+}
+function getUser(id) {
+    function getUser(bdId) {
+        function getUser(bdIdOrId) {
+            if (typeof bdIdOrId === 'number') {
+                return new User2();
+            }
+            else {
+                return new UserPersistend();
+            }
+        }
+    }
+}
