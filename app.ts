@@ -81,3 +81,37 @@ enum Direction {
 
 // get enum names
 type d = keyof typeof Direction;
+
+// INDEX OF
+interface Role {
+    name: string
+}
+
+interface Permission {
+    endDate: Date;
+}
+
+interface User {
+    name: string;
+    roles: Role[];
+    permission: Permission;
+}
+
+const user1: User = {
+    name: 'Vasia',
+    roles: [],
+    permission: {
+        endDate: new Date()
+    }
+}
+
+const nameUser = user1['name']; // JS
+const roleNames = 'roles';
+type rolesType = User['roles']; // TS
+type rolesType2 = User[typeof roleNames]; // TS
+
+type roleType = User['roles'][number];
+type dateType = User['permission']['endDate'];
+
+const roles = ['admin', 'user', 'super-user'] as const;
+type role2Types = typeof roles[number]
