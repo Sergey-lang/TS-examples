@@ -13,6 +13,7 @@ interface IUserService {
 class UserService implements IUserService {
     users: number = 1000;
 
+    @Log
     getUsersInDB(): number {
         return this.users
     }
@@ -57,3 +58,30 @@ function CreatedAt<T extends { new(...args: any[]): {} }>(constructor: T) {
 }
 
 console.log((new UserService() as IUserService & CreatedAt).createdAt)
+
+// METHOD DECORATOR
+function Log(target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<(...args: any) => any>) {
+    const oldValue = descriptor.value;
+    descriptor.value = () => {
+        console.log('no error')
+    }
+}
+
+// Logger decorator example
+function Catch({rethrow}: { rethrow: boolean } = {rethrow: true}) {
+    return (target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<(...args: any) => any>) => {
+        const method = descriptor.value;
+        descriptor.value = async (...args: any[]) => {
+            try {
+                return await method?.apply(target, args)
+            } catch (e) {
+                if (e instanceof Error) {
+                    console.log(e.message)
+                    if (rethrow) {
+                        throw e;
+                    }
+                }
+            }
+        }
+    }
+}
