@@ -12,12 +12,12 @@ function getValue<T, K extends keyof T>(obj: T, key: K) {
     return obj[key];
 }
 
-const user: IUser = {
+const user0: IUser = {
     name: 'Vasia',
     age: 30
 }
 
-const userName = getValue(user, 'name')
+const userName = getValue(user0, 'name')
 
 // EXAMPLE
 interface Data {
@@ -129,27 +129,27 @@ class User2 {
     name: string;
 }
 
-class UserPersistend extends User2 {
+class UserPersistent extends User2 {
     bdId: string;
 }
 
 function getUser(id: number): User2;
-function getUser(bdId: string): UserPersistend;
-function getUser(bdIdOrId: string | number): User2 | UserPersistend {
+function getUser(bdId: string): UserPersistent;
+function getUser(bdIdOrId: string | number): User2 | UserPersistent {
     if (typeof bdIdOrId === 'number') {
         return new User2();
     } else {
-        return new UserPersistend();
+        return new UserPersistent();
     }
 }
 
-type UserOrUserPersistend<T extends string | number> = T extends string ? UserPersistend : User2;
+type UserOrUserPersistent<T extends string | number> = T extends string ? UserPersistent : User2;
 
-function getUser2<T extends string | number>(id: T): UserOrUserPersistend<T> {
+function getUser2<T extends string | number>(id: T): UserOrUserPersistent<T> {
     if (typeof id === 'number') {
-        return new User2() as UserOrUserPersistend<T>;
+        return new User2() as UserOrUserPersistent<T>;
     } else {
-        return new UserPersistend();
+        return new UserPersistent();
     }
 }
 
@@ -203,3 +203,17 @@ type Payment2 = Pick<PaymentPersistent, 'from' | 'to'>
 
 type ExtractEx = Extract<'from' | Payment, string>;
 type ExcludeEx = Exclude<'from' | 'to' | Payment, string>;
+
+// RETURN TYPE
+class User3 {
+    constructor(public id: number, public name: string) {}
+}
+
+function getData(id: number, name: string): User3 {
+    return new User3(id, 'Vasia')
+}
+
+type RT = ReturnType<typeof getData>
+
+type PT = Parameters<typeof getData> // or [0]
+type first = PT[0];
