@@ -125,12 +125,12 @@ interface HTTPResponse<T extends 'success' | 'failed'> {
 }
 
 class User2 {
-    id: number;
-    name: string;
+    // id: number;
+    // name: string;
 }
 
 class UserPersistent extends User2 {
-    bdId: string;
+    // bdId: string;
 }
 
 function getUser(id: number): User2;
