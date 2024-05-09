@@ -206,7 +206,8 @@ type ExcludeEx = Exclude<'from' | 'to' | Payment, string>;
 
 // RETURN TYPE
 class User3 {
-    constructor(public id: number, public name: string) {}
+    constructor(public id: number, public name: string) {
+    }
 }
 
 function getData(id: number, name: string): User3 {
@@ -217,3 +218,19 @@ type RT = ReturnType<typeof getData>
 
 type PT = Parameters<typeof getData> // or [0]
 type first = PT[0];
+
+// AWAITED
+type a0 = Promise<string> // ==>
+type a = Awaited<Promise<string>>
+type a2 = Awaited<Promise<Promise<string>>>
+
+interface IMenu {
+    name: string;
+    url: string;
+}
+
+async function getMenu(): Promise<IMenu[]> {
+    return [{name: 'welcome', url: 'welcome'}]
+}
+
+type R = Awaited<ReturnType<typeof getMenu>>
